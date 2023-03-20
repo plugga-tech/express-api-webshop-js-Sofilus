@@ -9,13 +9,14 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-async function init() {
-    try{
-        const options = { useNewUrlParser: true, useUnifiedTopology: true}
-        mongoose.connect('mongodb://localhost:27017/webbshop', options)
+async function init(){
+    try {
+        const options = {useNewUrlParser: true, useUnifiedTopology: true}
+        await mongoose.connect("mongodb://127.0.0.1:27017/sofia-olsson", options)
         console.log("Connected to database")
-    } catch (error) {
-        console.log(error)
+    }
+    catch (error) {
+        console.error(error)
     }
 }
 
@@ -26,7 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/users', usersRouter);
 
 init()
 
