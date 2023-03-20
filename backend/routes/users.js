@@ -5,13 +5,13 @@ const getUsers = require('../models/addUser')
 /* Get users*/
 router.get('/', async (req, res) => {
   const users = await getUsers.find()
-  if(users){
+  
+  if(!users){
     res.status(404).json({error:"Can't get users"})
   } else {
     res.status(200).json(users)
     console.log(users)
   }
-  
 });
 
 /* Add new user */
