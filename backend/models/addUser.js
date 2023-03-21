@@ -6,7 +6,7 @@ const getUsers = mongoose.Schema({
     password: {
         type: String,
         select: false
-}})
-
+    }
+})
 
 module.exports = mongoose.model('users', getUsers)

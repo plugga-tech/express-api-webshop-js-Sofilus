@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   const users = await getUsers.find()
   
   if(!users){
-    res.status(404).json({error:"Can't get users"})
+    res.status(404).json({message:"Can't get users"})
   } else {
     res.status(200).json(users)
     console.log(users)
@@ -21,11 +21,24 @@ router.post('/add', async (req, res) => {
   
   if(!req.body.name || !req.body.password || !req.body.email){ 
     console.log("Missing password, name or email");
-    res.status(400).json({error: "Missing password, name or email"})
+    res.status(400).json({message: "Missing password, name or email"})
     return
   } else{
     await newUser.save()
     res.status(201).json(newUser)
+  }
+});
+
+/*Log in*/
+router.post('/login', async (req, res) => {
+
+  let loginValue = req.body;
+  const users = await getUsers.findOne().select("+password")
+
+  if((loginValue.password === users.password) && (loginValue.email === users.email)){ // password ska vara krypterat
+    console.log("Inloggad")
+  } else {
+    console.log("Användaren finns inte")
   }
 });
 
