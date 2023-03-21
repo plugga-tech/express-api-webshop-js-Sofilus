@@ -2,6 +2,18 @@ var express = require('express');
 var router = express.Router();
 const getProducts = require('../models/getProducts')
 
+/* Get products*/ 
+router.get('/', async (req, res) => {
+
+  const products = await getProducts.find()
+  
+  if(products.length === 0){
+    res.status(404).json({message:"Can't get products"})
+  } else {
+    res.status(200).json(products)
+  }
+});
+
 /* Create new product */ 
 router.post('/add', async (req, res) => {
 

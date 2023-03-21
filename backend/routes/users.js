@@ -6,11 +6,10 @@ const getUsers = require('../models/getUser')
 router.get('/', async (req, res) => {
   const users = await getUsers.find()
   
-  if(!users){
+  if(users.length === 0){
     res.status(404).json({message:"Can't get users"})
   } else {
     res.status(200).json(users)
-    console.log(users)
   }
 });
 
