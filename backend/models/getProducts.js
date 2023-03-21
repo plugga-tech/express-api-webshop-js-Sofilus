@@ -8,4 +8,4 @@ const getProducts = mongoose.Schema({
         lager: Number
 })
 
-module.exports = mongoose.model('users', getProducts)
+module.exports = mongoose.model('products', getProducts)
