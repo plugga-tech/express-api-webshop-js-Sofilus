@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const getProducts = require('../models/getProducts')
+const { ObjectId } = require("mongodb");
 
 /* Get products*/ 
 router.get('/', async (req, res) => {
@@ -13,6 +14,21 @@ router.get('/', async (req, res) => {
     res.status(200).json(products)
   }
 });
+
+/* Get specific product*/
+router.get('/:productId', async (req, res) => {
+  let id = req.params.productId;
+  console.log(id);
+  const product = await getProducts.findOne({"_id": new ObjectId(id)})
+  console.log(product)
+  
+  if(!product){
+    res.status(404).json({message:"Can't get products"})
+  } else {
+    res.status(200).json(product)
+  }
+});
+
 
 /* Create new product */ 
 router.post('/add', async (req, res) => {
