@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 const getUsers = require('../models/getUser')
 
-/* Get users*/
+// Vissa av testerna ska skicka tillbaka bara delar av ex objectet jag hämtar från databasen
+
+/*Get users*/
 router.get('/', async (req, res) => {
   const users = await getUsers.find()
   
@@ -11,6 +13,16 @@ router.get('/', async (req, res) => {
   } else {
     res.status(200).json(users)
   }
+});
+
+/* Get specific user */
+router.post('/', async (req, res) => {
+  const userId = req.body.id;
+  console.log(req.body.id)
+  const user = await getUsers.findById({_id: userId})
+  console.log(user)
+    res.status(200).json(user)
+  
 });
 
 /* Add new user */
