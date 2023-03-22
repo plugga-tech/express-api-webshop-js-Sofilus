@@ -34,7 +34,6 @@ router.post('/add', async (req, res) => {
   const newUser = new userModel(req.body)
   
   if(!req.body.name || !req.body.password || !req.body.email){ 
-    console.log("Missing password, name or email");
     res.status(400).json({message: "Missing password, name or email"})
     return
   } else {

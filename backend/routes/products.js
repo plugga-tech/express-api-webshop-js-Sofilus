@@ -18,9 +18,7 @@ router.get('/', async (req, res) => {
 /* Get specific product*/
 router.get('/:productId', async (req, res) => {
   let id = req.params.productId;
-  console.log(id);
   const product = await productModel.findOne({"_id": new ObjectId(id)})
-  console.log(product)
   
   if(!product){
     res.status(404).json({message:"Can't get products"})
@@ -36,7 +34,6 @@ router.post('/add', async (req, res) => {
     const newProduct = new productModel(req.body)
 
     if(!req.body.name || !req.body.description || !req.body.price || !req.body.lager){ 
-      console.log("Missing name, description, price or lager");
       res.status(400).json({message: "Missing name, description, price or lager"})
       return
     } else{
