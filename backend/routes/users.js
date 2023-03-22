@@ -18,10 +18,13 @@ router.get('/', async (req, res) => {
 /* Get specific user */
 router.post('/', async (req, res) => {
   const userId = req.body.id;
-  console.log(req.body.id)
   const user = await userModel.findById({_id: userId})
-  console.log(user)
-    res.status(200).json(user)
+  
+    if(!user){
+      res.status(404).json({message:"Can't get user"})
+    } else {
+      res.status(200).json(user)
+    }
   
 });
 
