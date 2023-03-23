@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
+var cors = require('cors')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -10,6 +11,7 @@ var productsRouter = require('./routes/products')
 var orderRouter = require('./routes/orders')
 
 var app = express();
+app.use(cors())
 
 async function init(){
     try {
