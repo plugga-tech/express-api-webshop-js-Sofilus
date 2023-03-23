@@ -1,4 +1,9 @@
+/*--------------------Login and logout ----------------------------*/
+
 const loginContainer = document.querySelector('#login')
+const logoutContainer = document.querySelector('#logout')
+
+createHtmlLogin();
 
 function createHtmlLogin (){
 
@@ -25,15 +30,19 @@ function createHtmlLogin (){
     loginBtn.id = "loginBtn"
     loginBtn.innerText = "Logga in";
     loginForm.appendChild(loginBtn);
-    
 }
-
-createHtmlLogin();
 
 const loginBtn = document.querySelector('#loginBtn');
 const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
-const loginForm = document.querySelector('#loginForm');
+
+function createHtmlLogout () {
+    const logoutBtn = document.createElement('button');
+    logoutBtn.id = "logoutBtn"
+    logoutBtn.innerText = "Logga ut";
+    logoutContainer.appendChild(logoutBtn)
+    console.log(logoutBtn)
+}
 
 loginBtn.addEventListener('click', tryToLogin)
 
@@ -53,7 +62,27 @@ function tryToLogin(e) {
         body: JSON.stringify(user)
     })
     .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error))
+    .then(data => {
 
+        if(data.id){
+            localStorage.setItem("userId", data.id)
+            loginContainer.removeChild(loginForm);
+            createHtmlLogout();
+            
+            
+        } else {
+            console.log('inlogg misslyckats');
+        }
+    })
+    .catch(error => console.log(error))
 };
+
+document.body.addEventListener('click', function ( event ) {
+    if( event.target.id == 'logoutBtn' ) {
+        localStorage.clear();
+        createHtmlLogin();
+        logoutContainer.removeChild(logoutBtn)
+    };
+});
+
+/*-------------------------------------------------------------*/
