@@ -106,28 +106,27 @@ document.body.addEventListener('click', function ( event ) {
     };
 });
 
-
 function createHtmlAddNewUser() {
     const addUserForm = document.createElement('form');
     addUserForm.id = "addUserForm"
     addNewUserContainer.appendChild(addUserForm);
 
-    const nameInput = document.createElement('input');
-    nameInput.id = "nameInput"
-    nameInput.type = "text";
-    nameInput.placeholder = "Namn";
-    nameInput.name = "name"
-    addUserForm.appendChild(nameInput);
+    const newNameInput = document.createElement('input');
+    newNameInput.id = "newNameInput"
+    newNameInput.type = "text";
+    newNameInput.placeholder = "Namn";
+    newNameInput.name = "name"
+    addUserForm.appendChild(newNameInput);
 
     const emailInput = document.createElement('input');
-    emailInput.id = "emailInput"
+    emailInput.id = "newEmailInput"
     emailInput.type = "email";
     emailInput.placeholder = "Email";
     emailInput.name = "email"
     addUserForm.appendChild(emailInput);
 
     const passwordInput = document.createElement('input');
-    passwordInput.id = "passwordInput"
+    passwordInput.id = "newPasswordInput"
     passwordInput.type = "password";
     passwordInput.placeholder = "Lösenord";
     passwordInput.name = "password"
@@ -139,3 +138,41 @@ function createHtmlAddNewUser() {
     createUserBtn.innerText = "Skapa användare";
     addUserForm.appendChild(createUserBtn);
 }
+let newNameInput = document.getElementById('newNameInput');
+console.log(newNameInput)
+document.body.addEventListener('click', createNewUser)
+
+function createNewUser(e) {
+    if( e.target.id == 'createUserBtn' ) {
+        e.preventDefault();
+        
+    let choosenName = addNewUserContainer.firstChild.value
+    
+
+    let user = {name: choosenName}
+
+    };
+    
+   /*
+    fetch('http://localhost:3000/api/users/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if(data.id){
+            localStorage.setItem("userId", data.id)
+            loginContainer.removeChild(loginForm);
+            createHtmlLogout();
+            
+            
+        } else {
+            console.log('inlogg misslyckats');
+        }
+    })
+    .catch(error => console.log(error))*/
+};
