@@ -58,7 +58,7 @@ router.post('/login', async (req, res) => {
 
   if((loginValue.password === users.password) && (loginValue.email === users.email)){
     console.log("Inloggad")
-    res.status(201).json({email: users.email, password: users.password})
+    res.status(201).json({id: users._id})
   } else {
     console.log("Användaren finns inte")
     res.status(404).json({message: "User not found"})
