@@ -2,8 +2,10 @@
 
 const loginContainer = document.querySelector('#login')
 const logoutContainer = document.querySelector('#logout')
+const addNewUserContainer = document.querySelector('#newUser')
 
 createHtmlLogin();
+createAddNewUserBtn()
 
 function createHtmlLogin (){
 
@@ -86,3 +88,54 @@ document.body.addEventListener('click', function ( event ) {
 });
 
 /*-------------------------------------------------------------*/
+
+/*---------------------Add new user---------------------------*/
+
+function createAddNewUserBtn(){
+    const createNewUserBtn = document.createElement('button');
+    createNewUserBtn.id = "createNewUserBtn"
+    createNewUserBtn.innerText = "Skapa ny användare";
+    addNewUserContainer.appendChild(createNewUserBtn);
+}
+
+document.body.addEventListener('click', function ( event ) {
+    if( event.target.id == 'createNewUserBtn' ) {
+        createHtmlAddNewUser();
+        loginContainer.removeChild(loginForm);
+        addNewUserContainer.removeChild(createNewUserBtn)
+    };
+});
+
+
+function createHtmlAddNewUser() {
+    const addUserForm = document.createElement('form');
+    addUserForm.id = "addUserForm"
+    addNewUserContainer.appendChild(addUserForm);
+
+    const nameInput = document.createElement('input');
+    nameInput.id = "nameInput"
+    nameInput.type = "text";
+    nameInput.placeholder = "Namn";
+    nameInput.name = "name"
+    addUserForm.appendChild(nameInput);
+
+    const emailInput = document.createElement('input');
+    emailInput.id = "emailInput"
+    emailInput.type = "email";
+    emailInput.placeholder = "Email";
+    emailInput.name = "email"
+    addUserForm.appendChild(emailInput);
+
+    const passwordInput = document.createElement('input');
+    passwordInput.id = "passwordInput"
+    passwordInput.type = "password";
+    passwordInput.placeholder = "Lösenord";
+    passwordInput.name = "password"
+    addUserForm.appendChild(passwordInput);
+
+    const createUserBtn = document.createElement('button');
+    createUserBtn.type = 'submit'
+    createUserBtn.id = "createUserBtn"
+    createUserBtn.innerText = "Skapa användare";
+    addUserForm.appendChild(createUserBtn);
+}
