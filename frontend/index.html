@@ -9,8 +9,27 @@
     <script src="main.js" type="module" defer></script>
 </head>
 <body>
-    <div id="login"></div>
-    <div id="logout"></div>
-    <div id="newUser"></div>
+    <main>
+        <div id="login">
+            <form id="loginForm">
+                <input type="email" id="emailInput" placeholder="Email" name="email">
+                <input type="password" id="passwordInput" placeholder="Lösenord" name="password">
+                <button type="submit" id="loginBtn">Logga in</button>
+            </form>
+            <button id="createNewUserBtn">Skapa ny användare</button>
+        </div>
+        <div id="logout">
+            <button id="logoutBtn"> Logga ut</button>
+        </div>
+        <div id="newUser">
+            <form id="addUserForm">
+                <input type="text" id="newNameInput" placeholder="Namn" name="newName">
+                <input type="email" id="newEmailInput" placeholder="Email" name="newEmail">
+                <input type="password" id="newPasswordInput" placeholder="Lösenord" name="newPassword">
+                <button type="submit" id="createUserBtn">Skapa användare</button>
+            </form>
+        </div>
+    </main>
+    
 </body>
 </html>

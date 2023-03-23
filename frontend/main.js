@@ -4,47 +4,15 @@ const loginContainer = document.querySelector('#login')
 const logoutContainer = document.querySelector('#logout')
 const addNewUserContainer = document.querySelector('#newUser')
 
-createHtmlLogin();
-createAddNewUserBtn()
-
-function createHtmlLogin (){
-
-    const loginForm = document.createElement('form');
-    loginForm.id = "loginForm"
-    loginContainer.appendChild(loginForm);
-
-    const emailInput = document.createElement('input');
-    emailInput.id = "emailInput"
-    emailInput.type = "email";
-    emailInput.placeholder = "Email";
-    emailInput.name = "email"
-    loginForm.appendChild(emailInput);
-
-    const passwordInput = document.createElement('input');
-    passwordInput.id = "passwordInput"
-    passwordInput.type = "password";
-    passwordInput.placeholder = "Lösenord";
-    passwordInput.name = "password"
-    loginForm.appendChild(passwordInput);
-
-    const loginBtn = document.createElement('button');
-    loginBtn.type = 'submit'
-    loginBtn.id = "loginBtn"
-    loginBtn.innerText = "Logga in";
-    loginForm.appendChild(loginBtn);
-}
-
 const loginBtn = document.querySelector('#loginBtn');
 const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
+const logoutBtn = document.querySelector('#logoutBtn')
 
-function createHtmlLogout () {
-    const logoutBtn = document.createElement('button');
-    logoutBtn.id = "logoutBtn"
-    logoutBtn.innerText = "Logga ut";
-    logoutContainer.appendChild(logoutBtn)
-    console.log(logoutBtn)
-}
+const createNewUserBtn = document.querySelector('#createNewUserBtn')
+
+logoutContainer.classList.add('display-none');
+addNewUserContainer.classList.add('display-none')
 
 loginBtn.addEventListener('click', tryToLogin)
 
@@ -68,10 +36,10 @@ function tryToLogin(e) {
 
         if(data.id){
             localStorage.setItem("userId", data.id)
-            loginContainer.removeChild(loginForm);
-            createHtmlLogout();
-            
-            
+            loginContainer.classList.add('display-none');
+            logoutContainer.classList.remove('display-none')
+            logoutBtn.classList.remove('display-none')
+
         } else {
             console.log('inlogg misslyckats');
         }
@@ -79,100 +47,21 @@ function tryToLogin(e) {
     .catch(error => console.log(error))
 };
 
-document.body.addEventListener('click', function ( event ) {
-    if( event.target.id == 'logoutBtn' ) {
+logoutBtn.addEventListener('click', logout)
+
+ function logout (e) {
         localStorage.clear();
-        createHtmlLogin();
-        logoutContainer.removeChild(logoutBtn)
-    };
-});
+        logoutBtn.classList.add('display-none')
+        loginContainer.classList.remove('display-none')
+};
 
 /*-------------------------------------------------------------*/
 
 /*---------------------Add new user---------------------------*/
 
-function createAddNewUserBtn(){
-    const createNewUserBtn = document.createElement('button');
-    createNewUserBtn.id = "createNewUserBtn"
-    createNewUserBtn.innerText = "Skapa ny användare";
-    addNewUserContainer.appendChild(createNewUserBtn);
-}
-
-document.body.addEventListener('click', function ( event ) {
-    if( event.target.id == 'createNewUserBtn' ) {
-        createHtmlAddNewUser();
-        loginContainer.removeChild(loginForm);
-        addNewUserContainer.removeChild(createNewUserBtn)
-    };
-});
-
-function createHtmlAddNewUser() {
-    const addUserForm = document.createElement('form');
-    addUserForm.id = "addUserForm"
-    addNewUserContainer.appendChild(addUserForm);
-
-    const newNameInput = document.createElement('input');
-    newNameInput.id = "newNameInput"
-    newNameInput.type = "text";
-    newNameInput.placeholder = "Namn";
-    newNameInput.name = "name"
-    addUserForm.appendChild(newNameInput);
-
-    const emailInput = document.createElement('input');
-    emailInput.id = "newEmailInput"
-    emailInput.type = "email";
-    emailInput.placeholder = "Email";
-    emailInput.name = "email"
-    addUserForm.appendChild(emailInput);
-
-    const passwordInput = document.createElement('input');
-    passwordInput.id = "newPasswordInput"
-    passwordInput.type = "password";
-    passwordInput.placeholder = "Lösenord";
-    passwordInput.name = "password"
-    addUserForm.appendChild(passwordInput);
-
-    const createUserBtn = document.createElement('button');
-    createUserBtn.type = 'submit'
-    createUserBtn.id = "createUserBtn"
-    createUserBtn.innerText = "Skapa användare";
-    addUserForm.appendChild(createUserBtn);
-}
-let newNameInput = document.getElementById('newNameInput');
-console.log(newNameInput)
-document.body.addEventListener('click', createNewUser)
-
-function createNewUser(e) {
-    if( e.target.id == 'createUserBtn' ) {
-        e.preventDefault();
-        
-    let choosenName = addNewUserContainer.firstChild.value
-    
-
-    let user = {name: choosenName}
-
-    };
-    
-   /*
-    fetch('http://localhost:3000/api/users/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
-    })
-    .then(res => res.json())
-    .then(data => {
-
-        if(data.id){
-            localStorage.setItem("userId", data.id)
-            loginContainer.removeChild(loginForm);
-            createHtmlLogout();
-            
-            
-        } else {
-            console.log('inlogg misslyckats');
-        }
-    })
-    .catch(error => console.log(error))*/
+createNewUserBtn.addEventListener('click', showNewUserForm)
+function showNewUserForm (e) {
+    createNewUserBtn.classList.add('display-none');
+    loginContainer.classList.add('display-none')
+    addNewUserContainer.classList.remove('display-none')
 };
