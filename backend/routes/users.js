@@ -36,10 +36,18 @@ router.post('/add', async (req, res) => {
   if(!req.body.name || !req.body.password || !req.body.email){ 
     res.status(400).json({message: "Missing password, name or email"})
     return
-  } else {
-    await newUser.save()
-    res.status(201).json(newUser)
+  } 
+  
+  const existingEmail = await userModel.findOne({email: req.body.email})
+  
+  if(existingEmail){
+    res.status(401).json({message: "Email already exists"})
+    return
   }
+  
+  await newUser.save()
+  res.status(201).json(newUser)
+  
 });
 
 /*Log in*/
@@ -50,8 +58,10 @@ router.post('/login', async (req, res) => {
 
   if((loginValue.password === users.password) && (loginValue.email === users.email)){
     console.log("Inloggad")
+    console.log(users)
   } else {
     console.log("Användaren finns inte")
+    console.log(users)
   }
 });
 
