@@ -55,9 +55,10 @@ router.post('/add', async (req, res) => {
 router.post('/login', async (req, res) => {
 
   let loginValue = req.body;
+  let password = req.body.password
   const users = await userModel.findOne().select("+password")
 
-  if((loginValue.password === users.password) && (loginValue.email === users.email)){
+  if((CryptoJS.SHA3(password).toString() === users.password) && (loginValue.email === users.email)){
     console.log("Inloggad")
     res.status(201).json({id: users._id})
   } else {
