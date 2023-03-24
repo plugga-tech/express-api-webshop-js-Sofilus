@@ -32,15 +32,11 @@ router.post('/', async (req, res) => {
 router.post('/add', async (req, res) => {
 
   const newUser = new userModel(req.body)
-  
+  const existingEmail = await userModel.findOne({email: req.body.email})
   if(!req.body.name || !req.body.password || !req.body.email){ 
     res.status(400).json({message: "Missing password, name or email"})
     return
-  } 
-  
-  const existingEmail = await userModel.findOne({email: req.body.email})
-  
-  if(existingEmail){
+  } else if (existingEmail){
     res.status(401).json({message: "Email already exists"})
     return
   }
