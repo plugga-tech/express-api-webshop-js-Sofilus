@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var CryptoJS = require('crypto-js')
 const userModel = require('../models/userModel')
 
 // Vissa av testerna ska skicka tillbaka bara delar av ex objectet jag hämtar från databasen
@@ -41,6 +42,10 @@ router.post('/add', async (req, res) => {
     return
   }
   
+  let incommingPassword = req.body.password
+  let passwordToSave = CryptoJS.SHA3(incommingPassword).toString(); // har ej med en saltnyckel
+  newUser.password = passwordToSave
+  console.log("new user", newUser);
   await newUser.save()
   res.status(201).json(newUser)
   
