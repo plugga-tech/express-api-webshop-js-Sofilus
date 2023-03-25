@@ -53,11 +53,17 @@ router.post('/add', async (req, res) => {
 
 /*Log in*/
 router.post('/login', async (req, res) => {
-
+  
   let loginValue = req.body;
   let password = req.body.password
-  const users = await userModel.findOne().select("+password")
+  const users = await userModel.findOne({email: req.body.email}).select("+password")
+console.log(users)
 
+  if(users === null){
+    console.log("Användaren finns inte")
+    res.status(404).json({message: "User not found"})
+    return
+  }
   if((CryptoJS.SHA3(password).toString() === users.password) && (loginValue.email === users.email)){
     console.log("Inloggad")
     res.status(201).json({id: users._id})
