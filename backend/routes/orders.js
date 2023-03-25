@@ -20,34 +20,47 @@ router.get('/all', async (req, res) => {
 router.post('/add', async (req, res) => {
 
     let products = req.body.products;
+    productsToSave = []
+
     for (let i = 0; i < products.length; i++ ) {
         
         let element = products[i];
-        if(!element.productId || !element.quantity){
+
+        if(element.quantity > 0){
+          productsToSave.push(element)
+        }
+
+        if(!element.productId){
         res.status(400).json({message: "Missing product id or amount"})
         return;
         }
     }
 
-    if(!req.body.user || !req.body.products){ 
-
-        res.status(400).json({message: "Missing user or product"})
-        return;
-    } 
+      if(!req.body.user || !req.body.products){ 
+          res.status(400).json({message: "Missing user or product"})
+          return;
+      } 
 
     for (let i = 0; i < products.length; i++ ){
-        let allProductsId = products[i].productId
-       const updateProductLager = await productModel.findOne({"_id": new ObjectId(allProductsId)})
+      let allProductsId = products[i].productId
+      const updateProductLager = await productModel.findOne({"_id": new ObjectId(allProductsId)})
        
-        updateProductLager.lager -= products[i].quantity
+      updateProductLager.lager -= products[i].quantity
 
-        await updateProductLager.save() 
+      await updateProductLager.save() 
     }
-   
-        const newOrder = new orderModel(req.body)
-        await newOrder.save()
 
-        res.status(201).json(newOrder)
+    if(productsToSave.length === 0){
+      res.status(400).json({message: "Missing pruducts"});
+      return;
+    }
+
+    saveOrder = {user: req.body.user, products: productsToSave}
+    const newOrder = new orderModel(saveOrder)
+    console.log(newOrder)
+    await newOrder.save()
+
+    res.status(201).json(newOrder)
  });
 
 
